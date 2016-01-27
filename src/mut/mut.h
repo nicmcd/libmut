@@ -35,6 +35,8 @@
 
 #include <vector>
 
+namespace mut {
+
 template <typename T>
 f64 arithmeticMean(const std::vector<T>& _vals);
 
@@ -46,6 +48,8 @@ f64 standardDeviation(f64 _variance);
 
 template <typename T>
 f64 slope(const std::vector<T>& _x, const std::vector<T>& _y);
+
+}  // namespace mut
 
 #include "mut/mut.tcc"
 

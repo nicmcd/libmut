@@ -37,6 +37,8 @@
 #include <numeric>
 #include <vector>
 
+namespace mut {
+
 template <typename T>
 f64 arithmeticMean(const std::vector<T>& _vals) {
   f64 sum = 0.0;
@@ -79,5 +81,7 @@ f64 slope(const std::vector<T>& _x, const std::vector<T>& _y) {
   // compute the slope
   return (n * xy - xs * ys) / (n * xx - xs * xs);
 }
+
+}  // namespace mut
 
 #endif  // MUT_MUT_H_
