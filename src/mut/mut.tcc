@@ -32,6 +32,7 @@
 #error "do not include this file, use the .h instead"
 #else  // MUT_MUT_H_
 
+#include <cassert>
 #include <cmath>
 
 #include <numeric>
