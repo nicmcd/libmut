@@ -49,18 +49,6 @@ f64 standardDeviation(f64 _variance);
 template <typename T>
 f64 slope(const std::vector<T>& _x, const std::vector<T>& _y);
 
-template <typename T>
-T pow2(T _uint);
-
-template <typename T>
-bool isPow2(T _uint);
-
-template <typename T>
-T floorLog2(T _uint);
-
-template <typename T>
-T ceilLog2(T _uint);
-
 }  // namespace mut
 
 #include "mut/mut.tcc"
