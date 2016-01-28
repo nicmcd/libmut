@@ -83,6 +83,42 @@ f64 slope(const std::vector<T>& _x, const std::vector<T>& _y) {
   return (n * xy - xs * ys) / (n * xx - xs * xs);
 }
 
+template <typename T>
+T pow2(T _uint) {
+  assert(_uint < (sizeof(T) * 8));
+  return (T)1 << _uint;
+}
+
+template <typename T>
+bool isPow2(T _uint) {
+  return (_uint & (_uint - (T)1)) == 0;
+}
+
+template <typename T>
+T floorLog2(T _uint) {
+  T r = 0;
+  while (_uint >>= (T)1) {
+    r++;
+  }
+  return r;
+}
+
+template <typename T>
+T ceilLog2(T _uint) {
+  // top end bail out
+  T e = sizeof(T) * 8;
+  if (_uint >= ((T)1 << (e - 1))) {
+    return e;
+  }
+
+  // all but the highest case
+  e = 0;
+  while (((T)1 << e) < _uint) {
+    e++;
+  }
+  return e;
+}
+
 }  // namespace mut
 
 #endif  // MUT_MUT_H_
