@@ -59,3 +59,65 @@ TEST(slope, simple) {
   std::vector<f64> v3 = {4, 5, 6, 1, 2, 3};
   ASSERT_LT(std::abs(mut::slope(t3, v3) - 1.0), 0.01);
 }
+
+TEST(generateCumulativeDistribution, one_based) {
+  std::vector<f64> pdist = {0.10, 0.15, 0.50, 0.25};
+  std::vector<f64> cdist;
+  mut::generateCumulativeDistribution(pdist, &cdist);
+  ASSERT_EQ(cdist.size(), pdist.size());
+  ASSERT_EQ(cdist[0], 0.00);
+  ASSERT_EQ(cdist[1], 0.10);
+  ASSERT_EQ(cdist[2], 0.25);
+  ASSERT_EQ(cdist[3], 0.75);
+}
+
+TEST(generateCumulativeDistribution, two_based) {
+  std::vector<f64> pdist = {0.20, 0.30, 1.00, 0.50};
+  std::vector<f64> cdist;
+  mut::generateCumulativeDistribution(pdist, &cdist);
+  ASSERT_EQ(cdist.size(), pdist.size());
+  ASSERT_EQ(cdist[0], 0.00);
+  ASSERT_EQ(cdist[1], 0.10);
+  ASSERT_EQ(cdist[2], 0.25);
+  ASSERT_EQ(cdist[3], 0.75);
+}
+
+TEST(generateCumulativeDistribution, half_based) {
+  std::vector<f64> pdist = {0.05, 0.075, 0.25, 0.125};
+  std::vector<f64> cdist;
+  mut::generateCumulativeDistribution(pdist, &cdist);
+  ASSERT_EQ(cdist.size(), pdist.size());
+  ASSERT_EQ(cdist[0], 0.00);
+  ASSERT_EQ(cdist[1], 0.10);
+  ASSERT_EQ(cdist[2], 0.25);
+  ASSERT_EQ(cdist[3], 0.75);
+}
+
+TEST(searchCumulativeDistribution, dist) {
+  // generate the cumulative distribution
+  std::vector<f64> pdist = {0.10, 0.15, 0.50, 0.25};
+  std::vector<f64> cdist;
+  mut::generateCumulativeDistribution(pdist, &cdist);
+
+  // initialize a random number generator and uniform real distribution
+  std::mt19937_64 prng;
+  std::seed_seq seed = {0xDEAFBEEF};
+  prng.seed(seed);
+  std::uniform_real_distribution<f64> dist;
+
+  // perform many rounds and keep count
+  const u64 ROUNDS = 40000000;
+  std::vector<u64> counts(pdist.size(), 0);
+  for (u64 round = 0; round < ROUNDS; round++) {
+    f64 rnd = dist(prng);
+    u64 loc = mut::searchCumulativeDistribution(cdist, rnd);
+    counts.at(loc)++;
+  }
+
+  // verify the distribution matches the pdist
+  for (u64 idx = 0; idx < pdist.size(); idx++) {
+    f64 act = (f64)counts.at(idx) / ROUNDS;
+    f64 exp = pdist.at(idx);
+    ASSERT_NEAR(act, exp, 0.0001);
+  }
+}

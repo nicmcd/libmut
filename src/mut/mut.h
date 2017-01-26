@@ -49,6 +49,13 @@ f64 standardDeviation(f64 _variance);
 template <typename T>
 f64 slope(const std::vector<T>& _x, const std::vector<T>& _y);
 
+template <typename T>
+void generateCumulativeDistribution(const std::vector<T>& _pdist,
+                                    std::vector<T>* _cdist);
+
+template <typename T>
+u64 searchCumulativeDistribution(const std::vector<T>& _cdist, T _value);
+
 }  // namespace mut
 
 #include "mut/mut.tcc"

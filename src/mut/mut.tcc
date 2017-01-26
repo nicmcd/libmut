@@ -83,6 +83,45 @@ f64 slope(const std::vector<T>& _x, const std::vector<T>& _y) {
   return (n * xy - xs * ys) / (n * xx - xs * xs);
 }
 
+template <typename T>
+void generateCumulativeDistribution(const std::vector<T>& _pdist,
+                                    std::vector<T>* _cdist) {
+  // determine the sum
+  T sum = std::accumulate(_pdist.cbegin(), _pdist.cend(), 0.0);
+
+  // generate the cumulative distribution
+  _cdist->clear();
+  _cdist->resize(_pdist.size(), 0.0);
+  T csum = 0.0;
+  for (u64 idx = 0; idx < _pdist.size(); idx++) {
+    _cdist->at(idx) = csum / sum;
+    csum += _pdist.at(idx);
+  }
+}
+
+template <typename T>
+u64 searchCumulativeDistribution(const std::vector<T>& _cdist, T _value) {
+  assert(_value >= 0.0 && _value <= 1.0);
+  u32 bot = 0;
+  u32 top = _cdist.size();
+
+  while (true) {
+    assert(top > bot);
+    u32 span = top - bot;
+    u32 mid = (span / 2) + bot;
+    if (span == 1) {
+      // done! return the index
+      return mid;
+    } else if (_cdist.at(mid) < _value) {
+      // raise the bottom
+      bot = mid;
+    } else {
+      // lower the top
+      top = mid;
+    }
+  }
+}
+
 }  // namespace mut
 
 #endif  // MUT_MUT_H_
