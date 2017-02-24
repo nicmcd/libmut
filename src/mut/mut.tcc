@@ -88,6 +88,7 @@ void generateCumulativeDistribution(const std::vector<T>& _pdist,
                                     std::vector<T>* _cdist) {
   // determine the sum
   T sum = std::accumulate(_pdist.cbegin(), _pdist.cend(), 0.0);
+  assert(sum > 0.0);
 
   // generate the cumulative distribution
   _cdist->clear();
