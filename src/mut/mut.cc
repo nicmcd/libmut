@@ -28,35 +28,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef MUT_MUT_H_
-#define MUT_MUT_H_
+#include "mut/mut.h"
 
-#include <prim/prim.h>
-
-#include <vector>
+#include <cmath>
 
 namespace mut {
 
-template <typename T>
-f64 arithmeticMean(const std::vector<T>& _vals);
-
-template <typename T>
-f64 variance(const std::vector<T>& _vals, f64 _mean);
-
-f64 standardDeviation(f64 _variance);
-
-template <typename T>
-f64 slope(const std::vector<T>& _x, const std::vector<T>& _y);
-
-template <typename T>
-void generateCumulativeDistribution(const std::vector<T>& _pdist,
-                                    std::vector<T>* _cdist);
-
-template <typename T>
-u64 searchCumulativeDistribution(const std::vector<T>& _cdist, T _value);
+f64 standardDeviation(f64 _variance) {
+  return sqrt(_variance);
+}
 
 }  // namespace mut
-
-#include "mut/mut.tcc"
-
-#endif  // MUT_MUT_H_

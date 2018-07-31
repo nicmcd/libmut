@@ -48,6 +48,19 @@ TEST(arithmeticMean, simple) {
   ASSERT_EQ(mut::arithmeticMean(v4), 2.0);
 }
 
+TEST(variance, simple) {
+  std::vector<u64> v2 = {1, 2, 3, 1, 2, 3, 1, 2, 3};
+  f64 mean = mut::arithmeticMean(v2);
+  ASSERT_NEAR(mut::variance(v2, mean), 0.6666667, 0.000001);
+}
+
+TEST(standardDeviation, simple) {
+  std::vector<u64> v2 = {1, 2, 3, 1, 2, 3, 1, 2, 3};
+  f64 mean = mut::arithmeticMean(v2);
+  f64 vari = mut::variance(v2, mean);
+  ASSERT_NEAR(mut::standardDeviation(vari), sqrt(vari), 0.000001);
+}
+
 TEST(slope, simple) {
   std::vector<f64> t1 = {0, 1, 2, 3, 4, 5};
   std::vector<f64> v1 = {1, 2, 3, 4, 5, 6};
