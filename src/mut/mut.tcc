@@ -28,6 +28,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+#ifndef MUT_MUT_TCC_
+#define MUT_MUT_TCC_
+
 #ifndef MUT_MUT_H_
 #error "do not include this file, use the .h instead"
 #else  // MUT_MUT_H_
@@ -126,3 +129,4 @@ u64 searchCumulativeDistribution(const std::vector<T>& _cdist, T _value) {
 }  // namespace mut
 
 #endif  // MUT_MUT_H_
+#endif  // MUT_MUT_TCC_
