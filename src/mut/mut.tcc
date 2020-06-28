@@ -38,6 +38,7 @@
 #include <cassert>
 #include <cmath>
 
+#include <limits>
 #include <numeric>
 #include <vector>
 
@@ -46,17 +47,42 @@ namespace mut {
 template <typename T>
 f64 arithmeticMean(const std::vector<T>& _vals) {
   f64 sum = 0.0;
-  for (auto it = _vals.cbegin(); it != _vals.cend(); ++it) {
-    sum += *it;
+  for (T x : _vals) {
+    sum += x;
   }
   return sum / _vals.size();
 }
 
 template <typename T>
-f64 variance(const std::vector<T>& _vals, f64 _mean) {
+f64 geometricMean(const std::vector<T>& _vals) {
+  // modified from https://stackoverflow.com/a/19982259/2116585
+  f64 m = 1.0;
+  u64 ex = 0;
+  double invN = 1.0 / _vals.size();
+  for (T x : _vals) {
+    int i;
+    f64 f1 = std::frexp(x, &i);
+    m *= f1;
+    ex += i;
+  }
+  constexpr int radix = std::numeric_limits<f64>::radix;
+  return (std::pow(radix, ex * invN) * std::pow(m, invN));
+}
+
+template <typename T>
+f64 harmonicMean(const std::vector<T>& _vals) {
+  f64 sum = 0.0;
+  for (T x : _vals) {
+    sum += 1.0 / x;
+  }
+  return _vals.size() / sum;
+}
+
+template <typename T>
+f64 variance(const std::vector<T>& _vals, f64 _arithmetic_mean) {
   f64 diffSum = 0.0;
   for (auto it = _vals.cbegin(); it != _vals.cend(); ++it) {
-    f64 diff = *it - _mean;
+    f64 diff = *it - _arithmetic_mean;
     diffSum += (diff * diff);
   }
   return diffSum / _vals.size();

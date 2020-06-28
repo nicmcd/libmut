@@ -41,7 +41,13 @@ template <typename T>
 f64 arithmeticMean(const std::vector<T>& _vals);
 
 template <typename T>
-f64 variance(const std::vector<T>& _vals, f64 _mean);
+f64 geometricMean(const std::vector<T>& _vals);
+
+template <typename T>
+f64 harmonicMean(const std::vector<T>& _vals);
+
+template <typename T>
+f64 variance(const std::vector<T>& _vals, f64 _arithmetic_mean);
 
 f64 standardDeviation(f64 _variance);
 

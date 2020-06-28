@@ -48,6 +48,20 @@ TEST(arithmeticMean, simple) {
   ASSERT_EQ(mut::arithmeticMean(v4), 2.0);
 }
 
+TEST(geometricMean, simple) {
+  std::vector<u64> v1 = {20, 30, 1000};
+  f64 product = 20 * 30 * 1000;
+  f64 exp = std::pow(product, 1 / 3.0);
+  ASSERT_NEAR(mut::geometricMean(v1), exp, 0.0001);
+  std::vector<f64> v2 = {2.0, 8.0};
+  ASSERT_NEAR(mut::geometricMean(v2), 4.0, 0.0001);
+}
+
+TEST(harmonicMean, simple) {
+  std::vector<u64> v1 = {60, 30};
+  ASSERT_NEAR(mut::harmonicMean(v1), 40.0, 0.0001);
+}
+
 TEST(variance, simple) {
   std::vector<u64> v2 = {1, 2, 3, 1, 2, 3, 1, 2, 3};
   f64 mean = mut::arithmeticMean(v2);
