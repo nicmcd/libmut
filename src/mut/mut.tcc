@@ -57,11 +57,12 @@ template <typename T>
 f64 geometricMean(const std::vector<T>& _vals) {
   // modified from https://stackoverflow.com/a/19982259/2116585
   f64 m = 1.0;
-  u64 ex = 0;
+  s64 ex = 0;
   double invN = 1.0 / _vals.size();
   for (T x : _vals) {
+    assert(x > 0.0);  // values must be > 0
     int i;
-    f64 f1 = std::frexp(x, &i);
+    f64 f1 = std::frexp(static_cast<f64>(x), &i);
     m *= f1;
     ex += i;
   }
@@ -73,6 +74,7 @@ template <typename T>
 f64 harmonicMean(const std::vector<T>& _vals) {
   f64 sum = 0.0;
   for (T x : _vals) {
+    assert(x > 0.0);  // values must be > 0
     sum += 1.0 / x;
   }
   return _vals.size() / sum;
