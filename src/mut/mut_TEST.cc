@@ -55,6 +55,8 @@ TEST(geometricMean, simple) {
   ASSERT_NEAR(mut::geometricMean(v1), exp, 0.0001);
   std::vector<f64> v2 = {2.0, 8.0};
   ASSERT_NEAR(mut::geometricMean(v2), 4.0, 0.0001);
+  std::vector<f64> v3 = {20, 0.0, 80};
+  ASSERT_EQ(mut::geometricMean(v3), 0.0);
 }
 
 TEST(harmonicMean, simple) {

@@ -60,7 +60,7 @@ f64 geometricMean(const std::vector<T>& _vals) {
   s64 ex = 0;
   double invN = 1.0 / _vals.size();
   for (T x : _vals) {
-    assert(x > 0.0);  // values must be > 0
+    assert(x >= 0);
     int i;
     f64 f1 = std::frexp(static_cast<f64>(x), &i);
     m *= f1;
