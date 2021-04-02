@@ -31,9 +31,9 @@
 #ifndef MUT_MUT_H_
 #define MUT_MUT_H_
 
-#include <prim/prim.h>
-
 #include <vector>
+
+#include "prim/prim.h"
 
 namespace mut {
 

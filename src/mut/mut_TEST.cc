@@ -28,16 +28,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#include <gtest/gtest.h>
-#include <prim/prim.h>
+#include "mut/mut.h"
 
 #include <cmath>
 #include <cstdio>
-
 #include <map>
 #include <random>
 
-#include "mut/mut.h"
+#include "gtest/gtest.h"
+#include "prim/prim.h"
 
 TEST(arithmeticMean, simple) {
   std::vector<u64> v2 = {1, 2, 3, 1, 2, 3, 1, 2, 3};
@@ -123,18 +122,18 @@ TEST(generateCumulativeDistribution, half_based) {
 }
 
 TEST(searchCumulativeDistribution, dist) {
-  // generate the cumulative distribution
+  // Generates the cumulative distribution.
   std::vector<f64> pdist = {0.10, 0.15, 0.50, 0.25};
   std::vector<f64> cdist;
   mut::generateCumulativeDistribution(pdist, &cdist);
 
-  // initialize a random number generator and uniform real distribution
+  // Initializes a random number generator and uniform real distribution.
   std::mt19937_64 prng;
   std::seed_seq seed = {0xDEAFBEEF};
   prng.seed(seed);
   std::uniform_real_distribution<f64> dist;
 
-  // perform many rounds and keep count
+  // Performs many rounds and keeps count.
   const u64 ROUNDS = 40000000;
   std::vector<u64> counts(pdist.size(), 0);
   for (u64 round = 0; round < ROUNDS; round++) {
@@ -143,7 +142,7 @@ TEST(searchCumulativeDistribution, dist) {
     counts.at(loc)++;
   }
 
-  // verify the distribution matches the pdist
+  // Verifies the distribution matches the pdist.
   for (u64 idx = 0; idx < pdist.size(); idx++) {
     f64 act = (f64)counts.at(idx) / ROUNDS;
     f64 exp = pdist.at(idx);
